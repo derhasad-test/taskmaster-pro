@@ -1,0 +1,33 @@
+.page { display: flex; flex-direction: column; gap: 24px; }
+.header { }
+.title { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.sub { font-size: 14px; color: var(--text-secondary); }
+
+.metrics {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px;
+}
+.metric {
+  display: flex; flex-direction: column;
+  padding: 20px; background: var(--bg-surface);
+  border: 1px solid var(--border-color); border-radius: var(--radius-xl);
+  transition: all var(--transition-fast);
+}
+.metric:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.metricValue { font-size: 32px; font-weight: 900; line-height: 1; }
+.metricLabel { font-size: 13px; color: var(--text-secondary); margin-top: 8px; font-weight: 500; }
+.metricSub { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+
+.chartsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.chartCard {
+  background: var(--bg-surface); border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl); padding: 20px;
+}
+.chartCard.wide { grid-column: span 2; }
+.cardTitle { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+.empty { font-size: 14px; color: var(--text-tertiary); text-align: center; padding: 40px; }
+
+@media (max-width: 768px) {
+  .chartsGrid { grid-template-columns: 1fr; }
+  .chartCard.wide { grid-column: span 1; }
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+}

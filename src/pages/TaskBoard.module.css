@@ -1,0 +1,69 @@
+.page { display: flex; flex-direction: column; gap: 20px; height: 100%; }
+.header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.title { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.sub { font-size: 14px; color: var(--text-secondary); }
+.headerActions { display: flex; gap: 10px; }
+
+.filterToggle {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg-elevated); border: 1px solid var(--border-color);
+  border-radius: var(--radius-md); color: var(--text-secondary);
+  font-size: 14px; font-weight: 500; font-family: var(--font-sans); cursor: pointer;
+  transition: all var(--transition-fast); position: relative;
+}
+.filterToggle:hover, .filterToggle.active {
+  border-color: var(--color-primary); color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+.filterDot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--color-primary); position: absolute; top: 6px; right: 6px;
+}
+
+.filters {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 16px; background: var(--bg-surface);
+  border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+  animation: fadeIn 0.2s ease;
+}
+.searchBox {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-elevated); border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md); flex: 1; min-width: 180px;
+  color: var(--text-tertiary);
+}
+.searchInput {
+  flex: 1; border: none; background: none; outline: none;
+  font-size: 14px; color: var(--text-primary); font-family: var(--font-sans);
+}
+.searchInput::placeholder { color: var(--text-tertiary); }
+.filterSelect {
+  padding: 8px 14px;
+  background: var(--bg-elevated); border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md); color: var(--text-primary);
+  font-size: 14px; font-family: var(--font-sans); cursor: pointer; outline: none;
+}
+.filterSelect:focus { border-color: var(--color-primary); }
+.clearBtn {
+  padding: 8px 14px;
+  background: none; border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md); color: var(--color-danger);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all var(--transition-fast); font-family: var(--font-sans);
+}
+.clearBtn:hover { background: var(--color-danger-light); }
+
+.board {
+  display: flex; gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  flex: 1;
+  align-items: flex-start;
+}
+.board::-webkit-scrollbar { height: 6px; }
+
+@media (max-width: 768px) {
+  .board { flex-direction: column; }
+}

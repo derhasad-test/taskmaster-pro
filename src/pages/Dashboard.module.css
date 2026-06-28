@@ -1,0 +1,112 @@
+.page { display: flex; flex-direction: column; gap: 24px; }
+
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.greeting { font-size: 26px; font-weight: 800; margin-bottom: 4px; }
+.greetingSub { font-size: 14px; color: var(--text-secondary); }
+.addBtn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
+  background: var(--color-primary); color: #fff;
+  border-radius: var(--radius-full); border: none; cursor: pointer;
+  font-size: 14px; font-weight: 600; font-family: var(--font-sans);
+  border: var(--border-3d); box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast); white-space: nowrap;
+}
+.addBtn:hover { transform: translateY(2px) translateX(2px); box-shadow: var(--shadow-pressed); }
+
+.overdueAlert {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px;
+  background: var(--color-danger-light);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  color: var(--color-danger); font-size: 14px;
+}
+.overdueLink {
+  display: flex; align-items: center; gap: 4px;
+  margin-left: auto; font-weight: 600; color: var(--color-danger);
+  white-space: nowrap;
+}
+.overdueLink:hover { text-decoration: underline; }
+
+/* Stat Cards */
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.statCard {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px; background: var(--bg-surface);
+  border: var(--border-3d); border-radius: 0px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-fast);
+}
+.statCard:hover { transform: translateY(-4px) translateX(-4px); box-shadow: var(--shadow-lg); }
+.statCard:active { transform: translateY(4px) translateX(4px); box-shadow: var(--shadow-pressed); }
+.statIcon {
+  width: 48px; height: 48px; border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.statBody { display: flex; flex-direction: column; }
+.statValue { font-size: 28px; font-weight: 800; line-height: 1; }
+.statLabel { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+.statSub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+
+/* Charts */
+.chartsRow { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; }
+.chartCard {
+  background: var(--bg-surface); border: var(--border-3d);
+  border-radius: 0px; padding: 20px; box-shadow: var(--shadow-lg);
+}
+.cardTitle {
+  font-size: 15px; font-weight: 700; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.catList { display: flex; flex-direction: column; gap: 12px; }
+.catItem { display: flex; align-items: center; gap: 8px; }
+.catDot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.catName { font-size: 13px; color: var(--text-secondary); min-width: 80px; }
+.catBar {
+  flex: 1; height: 6px; background: var(--border-color);
+  border-radius: var(--radius-full); overflow: hidden;
+}
+.catBarFill { height: 100%; border-radius: var(--radius-full); transition: width 0.6s ease; }
+.catCount { font-size: 13px; font-weight: 700; color: var(--text-primary); min-width: 20px; text-align: right; }
+
+/* Bottom row */
+.bottomRow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.listCard {
+  background: var(--bg-surface); border: var(--border-3d);
+  border-radius: 0px; padding: 20px; box-shadow: var(--shadow-lg);
+}
+.listHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.viewAll {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 13px; color: var(--color-primary); font-weight: 600;
+}
+.viewAll:hover { text-decoration: underline; }
+.taskList { display: flex; flex-direction: column; gap: 10px; }
+.taskRow {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 10px 12px;
+  background: var(--bg-surface); border-radius: 0px; border: var(--border-3d);
+  box-shadow: var(--shadow-xs);
+  transition: all var(--transition-fast);
+}
+.taskRow:hover { background: var(--bg-hover); transform: translateY(-2px) translateX(-2px); box-shadow: var(--shadow-sm); }
+.taskRow:active { transform: translateY(2px) translateX(2px); box-shadow: var(--shadow-pressed); }
+.taskRowLeft { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.taskRowDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.taskRowTitle { font-size: 13px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.taskRowRight { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.taskRowDate { font-size: 11px; color: var(--text-tertiary); white-space: nowrap; }
+.overdueDate { color: var(--color-danger) !important; font-weight: 600; }
+.empty { font-size: 13px; color: var(--text-tertiary); text-align: center; padding: 20px; }
+
+@media (max-width: 1100px) { .chartsRow { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+  .chartsRow { grid-template-columns: 1fr; }
+  .bottomRow { grid-template-columns: 1fr; }
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) { .statsGrid { grid-template-columns: 1fr; } }

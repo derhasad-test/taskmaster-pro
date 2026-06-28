@@ -1,0 +1,54 @@
+.form { display: flex; flex-direction: column; gap: 16px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.select {
+  padding: 10px 14px;
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  transition: border-color var(--transition-fast);
+}
+.select:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-light); }
+
+.subtaskSection { display: flex; flex-direction: column; gap: 8px; }
+.subtaskList { display: flex; flex-direction: column; gap: 4px; }
+.subtaskItem {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--bg-hover);
+  border-radius: var(--radius-sm);
+  gap: 8px;
+}
+.subtaskTitle { font-size: 13px; color: var(--text-primary); flex: 1; }
+.subtaskRemove {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-tertiary); background: none; border: none;
+  cursor: pointer; border-radius: 4px; padding: 2px;
+  transition: all var(--transition-fast);
+}
+.subtaskRemove:hover { color: var(--color-danger); background: var(--color-danger-light); }
+.subtaskAdd { display: flex; gap: 8px; }
+.subtaskInput {
+  flex: 1; padding: 8px 12px;
+  background: var(--bg-elevated); border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md); color: var(--text-primary);
+  font-size: 14px; font-family: var(--font-sans); outline: none;
+}
+.subtaskInput:focus { border-color: var(--color-primary); }
+.subtaskBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px;
+  background: var(--color-primary); color: #fff;
+  border-radius: var(--radius-md); border: none; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.subtaskBtn:hover { background: var(--color-primary-hover); }
+
+@media (max-width: 480px) { .row { grid-template-columns: 1fr; } }

@@ -1,0 +1,101 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  background: var(--bg-page);
+}
+
+/* Left panel */
+.panel {
+  flex: 1;
+  background: linear-gradient(135deg, #1a0a3c 0%, #0D0D1E 50%, #0A1628 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+.panel::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(108,99,255,0.3) 0%, transparent 70%);
+  top: -100px; left: -100px;
+}
+.panel::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(255,101,132,0.2) 0%, transparent 70%);
+  bottom: -100px; right: -100px;
+}
+.panelInner { position: relative; z-index: 1; max-width: 420px; }
+.logo { display: flex; align-items: center; gap: 10px; margin-bottom: 48px; }
+.logoIcon {
+  width: 40px; height: 40px;
+  background: var(--color-primary);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; box-shadow: var(--shadow-glow);
+}
+.logoText {
+  font-size: 22px; font-weight: 800;
+  background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.panelTitle { font-size: 32px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 16px; }
+.panelSub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 40px; }
+.panelFeatures { display: flex; flex-direction: column; gap: 14px; }
+.panelFeature { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.85); font-size: 15px; }
+.featureCheck {
+  width: 22px; height: 22px;
+  background: rgba(108,99,255,0.3);
+  border: 1px solid rgba(108,99,255,0.5);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  color: #a78bfa;
+  flex-shrink: 0;
+}
+
+/* Right form */
+.form {
+  width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: var(--bg-surface);
+}
+.formInner { width: 100%; max-width: 380px; }
+.formTitle { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
+.formSub { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; }
+.fields { display: flex; flex-direction: column; gap: 16px; }
+.errorBanner {
+  padding: 12px 16px;
+  background: var(--color-danger-light);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0;
+  color: var(--text-tertiary); font-size: 13px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border-color);
+}
+.switchLink {
+  text-align: center; margin-top: 24px;
+  font-size: 14px; color: var(--text-secondary);
+}
+.switchLink a { color: var(--color-primary); font-weight: 600; }
+.switchLink a:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .panel { display: none; }
+  .form { width: 100%; padding: 40px 24px; }
+}

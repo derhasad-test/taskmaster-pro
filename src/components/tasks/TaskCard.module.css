@@ -1,0 +1,248 @@
+.card {
+  background: var(--bg-surface);
+  border: var(--border-3d);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all var(--transition-fast);
+  cursor: default;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px) translateX(-4px);
+  box-shadow: var(--shadow-xl);
+}
+.card:active, .card.dragging {
+  transform: translateY(4px) translateX(4px);
+  box-shadow: var(--shadow-pressed);
+}
+.card.completed { opacity: 0.7; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.completeBtn {
+  display: flex; align-items: center;
+  background: none; border: none; cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+.completeBtn:hover { transform: scale(1.2); }
+.actions { display: flex; gap: 4px; opacity: 0; transition: opacity var(--transition-fast); }
+.card:hover .actions { opacity: 1; }
+.actionBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--text-tertiary); background: none; border: none; cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.actionBtn:hover { background: var(--bg-hover); color: var(--text-primary); }
+.actionBtn.confirmDelete { color: var(--color-danger); background: var(--color-danger-light); }
+
+.dragHandle {
+  position: absolute;
+  top: 50%; left: 4px;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  cursor: grab;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  display: flex; align-items: center;
+}
+.card:hover .dragHandle { opacity: 1; }
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  padding-left: 4px;
+}
+.title.done {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+.description {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* Subtasks Improvement */
+.subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+  padding: 12px;
+  background: var(--bg-elevated);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+.subtaskToggle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.subtaskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.subtaskLabel {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-tertiary);
+  letter-spacing: 1px;
+}
+
+.progressText {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.subtaskProgress {
+  width: 100%;
+  height: 12px;
+  background: var(--bg-page);
+  border: 2px solid var(--border-color);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+.subtaskBar {
+  height: 100%;
+  background: var(--color-primary);
+  border-right: 2px solid var(--border-color);
+  transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toggleIcon {
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  align-self: center;
+  transition: transform var(--transition-base);
+}
+
+.subtaskList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 2px solid var(--border-color);
+}
+
+.subtaskItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast);
+}
+
+.subtaskItem:hover {
+  background: var(--bg-hover);
+}
+
+.checkWrapper {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.subtaskCheck {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0; width: 0;
+}
+
+.customCheck {
+  position: absolute;
+  top: 0; left: 0;
+  height: 18px; width: 18px;
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  box-shadow: 2px 2px 0px var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.subtaskItem:hover .customCheck {
+  transform: translateY(-1px) translateX(-1px);
+  box-shadow: 3px 3px 0px var(--border-color);
+}
+
+.subtaskCheck:checked ~ .customCheck {
+  background-color: var(--color-primary);
+  transform: translateY(2px) translateX(2px);
+  box-shadow: 0px 0px 0px var(--border-color);
+}
+
+.customCheck:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px; top: 1px;
+  width: 4px; height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.subtaskCheck:checked ~ .customCheck:after {
+  display: block;
+}
+
+.subtaskText {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.subtaskText.subtaskDone {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+  opacity: 0.6;
+}
+
+/* Due date */
+.dueDate {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 500;
+  padding: 3px 8px; border-radius: var(--radius-full);
+  background: var(--bg-hover); color: var(--text-tertiary);
+  width: fit-content;
+}
+.dueDate.overdue { background: var(--color-danger-light); color: var(--color-danger); }
+.dueDate.today { background: var(--color-warning-light); color: var(--color-warning); }
+.dueDate.soon { background: var(--color-warning-light); color: var(--color-warning); }
+.dueDate.upcoming { background: var(--color-success-light); color: var(--color-success); }
