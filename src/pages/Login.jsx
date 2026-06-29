@@ -7,7 +7,7 @@ import Input from '../components/ui/Input';
 import styles from './Auth.module.css';
 
 export default function Login() {
-  const { login, loading, error, clearError } = useAuth();
+  const { login, signup, loading, error, clearError } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -98,13 +98,19 @@ export default function Login() {
           <Button
             variant="secondary" fullWidth
             onClick={async () => {
-              // Pre-fill demo credentials
-              const ok = await login('demo@taskflow.app', 'demo1234');
+              // Try to login as demo user
+              let ok = await login('demo@taskflow.app', 'demo1234');
+              
+              // If demo user doesn't exist, create it first
               if (!ok) {
-                // Register demo user first
-                const { signup } = useAuth;
+                await signup('Demo User', 'demo@taskflow.app', 'demo1234');
+                // Now login
+                ok = await login('demo@taskflow.app', 'demo1234');
               }
-              navigate('/dashboard');
+              
+              if (ok) {
+                navigate('/dashboard');
+              }
             }}
           >
             Continue as Demo User

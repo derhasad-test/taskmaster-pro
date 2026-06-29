@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, Sun, Moon, Menu, X, Plus } from 'lucide-react';
+import { Search, Bell, Sun, Moon, Menu, X, Plus, Mic } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import { useTasks } from '../../context/TaskContext';
@@ -16,7 +16,10 @@ export default function Topbar({ onMobileMenuToggle, mobileMenuOpen, onAddTask }
   const [searchResults, setSearchResults] = useState([]);
   const [showSearch, setShowSearch] = useState(false);
   const [showNotifs, setShowNotifs] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const searchRef = useRef(null);
+  const searchInputRef = useRef(null);
+  const recognitionRef = useRef(null);
 
   const overdueTasks = tasks.filter(t =>
     t.status !== 'completed' && t.dueDate && new Date(t.dueDate) < new Date()
@@ -41,9 +44,46 @@ export default function Topbar({ onMobileMenuToggle, mobileMenuOpen, onAddTask }
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  // Initialize speech recognition
+  useEffect(() => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = false;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = 'en-US';
+
+      recognitionRef.current.onstart = () => setIsListening(true);
+      recognitionRef.current.onend = () => setIsListening(false);
+      recognitionRef.current.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        if (event.isFinal) {
+          setSearch(transcript.trim());
+          setShowSearch(true);
+        }
+      };
+      recognitionRef.current.onerror = () => setIsListening(false);
+    }
+  }, []);
+
   const handleResultClick = (taskId) => {
-    setSearch(''); setShowSearch(false);
+    setSearch(''); 
+    setShowSearch(false);
+    setSearchResults([]);
     navigate('/board');
+  };
+
+  const toggleVoiceSearch = () => {
+    if (!recognitionRef.current) return;
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      recognitionRef.current.start();
+    }
   };
 
   return (
@@ -58,6 +98,7 @@ export default function Topbar({ onMobileMenuToggle, mobileMenuOpen, onAddTask }
         <div className={styles.searchBox}>
           <Search size={16} className={styles.searchIcon} />
           <input
+            ref={searchInputRef}
             type="text"
             placeholder="Search tasks..."
             value={search}
@@ -66,22 +107,42 @@ export default function Topbar({ onMobileMenuToggle, mobileMenuOpen, onAddTask }
             className={styles.searchInput}
             aria-label="Search tasks"
           />
+          <button 
+            className={`${styles.voiceBtn} ${isListening ? styles.listening : ''}`}
+            onClick={(e) => { e.stopPropagation(); toggleVoiceSearch(); }}
+            title={isListening ? 'Stop listening' : 'Start voice search'}
+            aria-label="Voice search"
+            type="button"
+          >
+            <Mic size={14} />
+          </button>
           {search && (
-            <button className={styles.clearSearch} onClick={() => { setSearch(''); setSearchResults([]); }}>
+            <button className={styles.clearSearch} onClick={(e) => { e.stopPropagation(); setSearch(''); setSearchResults([]); }} type="button">
               <X size={14} />
             </button>
           )}
         </div>
-        {showSearch && searchResults.length > 0 && (
+        {showSearch && search.trim() && (
           <div className={styles.searchDropdown}>
-            {searchResults.map(t => (
-              <button key={t.id} className={styles.searchResult} onClick={() => handleResultClick(t.id)}>
-                <span className={styles.resultTitle}>{t.title}</span>
-                <span className={`${styles.resultStatus} ${styles[t.status]}`}>
-                  {t.status === 'todo' ? 'To Do' : t.status === 'in-progress' ? 'In Progress' : 'Done'}
-                </span>
-              </button>
-            ))}
+            {searchResults.length > 0 ? (
+              searchResults.map(t => (
+                <button key={t.id} className={styles.searchResult} onClick={() => handleResultClick(t.id)}>
+                  <span className={styles.resultTitle}>{t.title}</span>
+                  <span className={`${styles.resultStatus} ${styles[t.status]}`}>
+                    {t.status === 'todo' ? 'To Do' : t.status === 'in-progress' ? 'In Progress' : 'Done'}
+                  </span>
+                </button>
+              ))
+            ) : (
+              <div className={styles.emptyState}>
+                <div className={styles.emptyIcon}>🔍</div>
+                <p className={styles.emptyTitle}>No tasks found</p>
+                <p className={styles.emptyText}>Try searching with different keywords or create a new task</p>
+                <button className={styles.createButton} onClick={onAddTask} type="button">
+                  <Plus size={14} /> Create New Task
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

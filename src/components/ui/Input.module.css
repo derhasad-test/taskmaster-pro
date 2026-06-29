@@ -29,10 +29,10 @@
   display: flex;
   align-items: center;
   color: var(--text-tertiary);
-  pointer-events: none;
 }
-.leftIcon { left: 12px; }
-.rightIcon { right: 12px; }
+.leftIcon { left: 12px; pointer-events: none; }
+.rightIcon { right: 12px; pointer-events: auto; z-index: 1; }
+.rightIcon > * { pointer-events: auto; }
 
 .error { font-size: 12px; color: var(--color-danger); }
 .hint  { font-size: 12px; color: var(--text-tertiary); }

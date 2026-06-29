@@ -39,6 +39,13 @@ export default function Profile() {
   };
 
   const joinDate = user?.joinedAt ? new Date(user.joinedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'N/A';
+  const passwordCreatedDate = user?.passwordCreatedAt ? new Date(user.passwordCreatedAt).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }) : 'N/A';
 
   return (
     <div className={styles.page}>
@@ -64,6 +71,7 @@ export default function Profile() {
             <h2 className={styles.name}>{user?.name}</h2>
             <p className={styles.email}>{user?.email}</p>
             <p className={styles.joined}>Member since {joinDate}</p>
+            <p className={styles.joined}>Password created {passwordCreatedDate}</p>
           </div>
 
           {/* Stats */}

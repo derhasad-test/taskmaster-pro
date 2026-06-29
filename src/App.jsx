@@ -5,6 +5,9 @@ import { TaskProvider } from './context/TaskContext';
 import { ToastProvider } from './context/ToastContext';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
+import Landing from './pages/Landing';
+import Welcome from './pages/Welcome';
+import PremiumLanding from './pages/PremiumLanding';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
@@ -31,8 +34,12 @@ function PublicOnlyRoute({ children }) {
 function AppRoutes() {
   return (
     <Routes>
-      {/* Public */}
-      <Route path="/" element={<Navigate to="/signup" replace />} />
+      {/* Public - Landing Pages */}
+      <Route path="/" element={<PremiumLanding />} />
+      <Route path="/landing" element={<Landing />} />
+      <Route path="/welcome" element={<Welcome />} />
+      
+      {/* Auth Pages */}
       <Route path="/login" element={<PublicOnlyRoute><Login /></PublicOnlyRoute>} />
       <Route path="/signup" element={<PublicOnlyRoute><Signup /></PublicOnlyRoute>} />
 

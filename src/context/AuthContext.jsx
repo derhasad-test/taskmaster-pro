@@ -57,6 +57,7 @@ export function AuthProvider({ children }) {
       avatar: null,
       bio: '',
       joinedAt: new Date().toISOString(),
+      passwordCreatedAt: new Date().toISOString(),
       notifications: { email: true, browser: true, taskReminders: true },
     };
     saveUsers([...users, newUser]);

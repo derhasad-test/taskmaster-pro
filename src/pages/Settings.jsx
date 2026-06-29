@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Sun, Moon, Bell, Trash2, Download, Plus, X } from 'lucide-react';
+import * as XLSX from 'xlsx';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useTasks } from '../context/TaskContext';
@@ -73,12 +74,53 @@ export default function Settings() {
   };
 
   const handleExport = () => {
-    const data = { tasks, categories, exportedAt: new Date().toISOString() };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = 'taskflow-export.json'; a.click();
-    URL.revokeObjectURL(url);
-    addToast('Data exported!', 'success');
+    const wb = XLSX.utils.book_new();
+
+    // Sheet 1: Tasks
+    const tasksData = tasks.map(t => ({
+      'Task ID': t.id,
+      'Title': t.title,
+      'Description': t.description || '',
+      'Status': t.status === 'todo' ? 'To Do' : t.status === 'in-progress' ? 'In Progress' : 'Done',
+      'Priority': t.priority || 'Medium',
+      'Due Date': t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '',
+      'Category': categories.find(c => c.id === t.categoryId)?.name || '',
+      'Created At': new Date(t.createdAt).toLocaleDateString(),
+      'Subtasks': t.subtasks?.length || 0,
+      'Completed Subtasks': t.subtasks?.filter(s => s.completed).length || 0,
+    }));
+    const wsTask = XLSX.utils.json_to_sheet(tasksData);
+    XLSX.utils.book_append_sheet(wb, wsTask, 'Tasks');
+
+    // Sheet 2: Categories
+    const catData = categories.map(c => ({
+      'Category ID': c.id,
+      'Name': c.name,
+      'Color': c.color,
+      'Icon': c.icon,
+      'Task Count': tasks.filter(t => t.categoryId === c.id).length,
+    }));
+    const wsCat = XLSX.utils.json_to_sheet(catData);
+    XLSX.utils.book_append_sheet(wb, wsCat, 'Categories');
+
+    // Sheet 3: Summary
+    const completed = tasks.filter(t => t.status === 'completed').length;
+    const inProgress = tasks.filter(t => t.status === 'in-progress').length;
+    const pending = tasks.filter(t => t.status === 'todo').length;
+    const summaryData = [
+      { 'Metric': 'Total Tasks', 'Count': tasks.length },
+      { 'Metric': 'Completed', 'Count': completed },
+      { 'Metric': 'In Progress', 'Count': inProgress },
+      { 'Metric': 'Pending', 'Count': pending },
+      { 'Metric': 'Total Categories', 'Count': categories.length },
+      { 'Metric': 'Export Date', 'Count': new Date().toLocaleString() },
+    ];
+    const wsSummary = XLSX.utils.json_to_sheet(summaryData);
+    XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
+
+    // Generate Excel file
+    XLSX.writeFile(wb, `taskflow-export-${new Date().toISOString().split('T')[0]}.xlsx`);
+    addToast('Data exported to Excel!', 'success');
   };
 
   const ICONS = ['📁','💼','🎯','🔬','📣','💡','🛠','🎨','📚','⚡','🌟','🔥'];
@@ -171,7 +213,7 @@ export default function Settings() {
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Data</h2>
         <div className={styles.card}>
-          <SettingRow label="Export Data" sub="Download all your tasks as JSON">
+          <SettingRow label="Export Data" sub="Download all your tasks as Excel file">
             <Button variant="secondary" size="sm" onClick={handleExport}>
               <Download size={14} /> Export
             </Button>
