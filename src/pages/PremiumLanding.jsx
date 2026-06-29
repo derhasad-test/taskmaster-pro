@@ -8,9 +8,10 @@ import {
   Mail, Phone, MapPin
 } from 'lucide-react';
 import styles from './PremiumLanding.module.css';
-
+import { useAuth } from '../context/AuthContext';
 export default function PremiumLanding() {
   const navigate = useNavigate();
+  const { login, signup } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState(null);
@@ -169,6 +170,17 @@ export default function PremiumLanding() {
               className={styles.secondaryBtn}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={async () => {
+                // Try to login as demo user
+                let ok = await login('demo@taskflow.app', 'demo1234');
+                
+                // If demo user doesn't exist, create it first
+                if (!ok) {
+                  await signup('Demo User', 'demo@taskflow.app', 'demo1234');
+                  // Now login
+                  ok = await login('demo@taskflow.app', 'demo1234');
+                }
+              }}
             >
               <Play size={20} /> Watch Demo
             </motion.button>
@@ -512,7 +524,7 @@ export default function PremiumLanding() {
       </section>
 
       {/* Footer */}
-      <footer className={styles.footer}>
+      <footer id="contact" className={styles.footer}>
         <div className={styles.footerContent}>
           <div className={styles.footerColumn}>
             <h4>Company</h4>
@@ -542,7 +554,7 @@ export default function PremiumLanding() {
             <div className={styles.socialIcons}>
               <motion.a href="#" whileHover={{ scale: 1.2 }}><Github size={20} /></motion.a>
               <motion.a href="https://www.linkedin.com/in/derhasad-b-568615258/" whileHover={{ scale: 1.2 }}><Linkedin size={20} /></motion.a>
-              <motion.a href="https://x.com/DerhasadBa99140" whileHover={{ scale: 1.2 }}><Twitter size={20} /></motion.a>
+              <motion.a href="https://x.com/DerhasadBa99140n" whileHover={{ scale: 1.2 }}><Twitter size={20} /></motion.a>
               <motion.a href="#" whileHover={{ scale: 1.2 }}><Facebook size={20} /></motion.a>
               <motion.a href="#" whileHover={{ scale: 1.2 }}><Instagram size={20} /></motion.a>
             </div>
