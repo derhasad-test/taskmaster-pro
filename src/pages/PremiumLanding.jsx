@@ -573,7 +573,16 @@ export default function PremiumLanding() {
           </div>
         </div>
         <div className={styles.footerBottom}>
-          <p>&copy; 2026 TaskFlow. All rights reserved. Made with ❤️  </p> 
+          {/* <p>&copy; 2026 TaskFlow. All rights reserved. Made with ❤️  </p>  */}
+          {/* <p>
+            &copy; {new Date().getFullYear()} TaskFlow. All rights reserved. Made with ❤️
+            </p> */}
+            <p>
+                 &copy; {new Date().toLocaleString("default", {
+                 month: "long",
+                 year: "numeric",
+  })} TaskFlow. All rights reserved. Made with ❤️ Derhasad Basumatary
+</p>
         </div>
       </footer>
     </div>
