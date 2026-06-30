@@ -64,19 +64,19 @@ export default function PremiumLanding() {
 
   const testimonials = [
     {
-      name: 'Sarah Chen',
+      name: 'Nijwm Narzary',
       role: 'Product Manager',
       text: 'TaskFlow transformed the way I organize my daily work. It\'s simple yet powerful.',
       avatar: '👩‍💼'
     },
     {
-      name: 'Mike Johnson',
+      name: 'Maoswm Boro',
       role: 'Freelancer',
       text: 'Simple, elegant, and incredibly productive. Best task manager I\'ve used.',
       avatar: '👨‍💻'
     },
     {
-      name: 'Emma Wilson',
+      name: 'Lily Wary',
       role: 'Team Lead',
       text: 'TaskFlow helps our team stay organized and focused. Highly recommend it!',
       avatar: '👩‍🦰'
@@ -573,7 +573,7 @@ export default function PremiumLanding() {
           </div>
         </div>
         <div className={styles.footerBottom}>
-          {/* <p>&copy; 2026 TaskFlow. All rights reserved. Made with ❤️  </p>  */}
+          {/* <p>&copy; 2026 TaskFlow. All rights reserved. Made with ❤️ </p> */}
           {/* <p>
             &copy; {new Date().getFullYear()} TaskFlow. All rights reserved. Made with ❤️
             </p> */}
