@@ -564,11 +564,11 @@ export default function PremiumLanding() {
           <div className={styles.footerColumn}>
             <h4>Follow Us</h4>
             <div className={styles.socialIcons}>
-              <motion.a href="#" whileHover={{ scale: 1.2 }}><Github size={20} /></motion.a>
+              <motion.a href="https://github.com/derhasad-test" whileHover={{ scale: 1.2 }}><Github size={20} /></motion.a>
               <motion.a href="https://www.linkedin.com/in/derhasad-b-568615258/" whileHover={{ scale: 1.2 }}><Linkedin size={20} /></motion.a>
               <motion.a href="https://x.com/DerhasadBa99140n" whileHover={{ scale: 1.2 }}><Twitter size={20} /></motion.a>
-              <motion.a href="#" whileHover={{ scale: 1.2 }}><Facebook size={20} /></motion.a>
-              <motion.a href="#" whileHover={{ scale: 1.2 }}><Instagram size={20} /></motion.a>
+              <motion.a href="https://www.facebook.com/derhasad.basumatary.186/" whileHover={{ scale: 1.2 }}><Facebook size={20} /></motion.a>
+              <motion.a href="https://www.instagram.com/derhasad.real" whileHover={{ scale: 1.2 }}><Instagram size={20} /></motion.a>
             </div>
           </div>
         </div>
