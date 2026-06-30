@@ -170,15 +170,27 @@ export default function PremiumLanding() {
               className={styles.secondaryBtn}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+            //   onClick={async () => {
+            //     const ok = await login("demo@taskflow.app", "demo1234");
+            //     if (ok) {
+            //       navigate('/dashboard');
+            //     }
+            //   }}
               onClick={async () => {
                 // Try to login as demo user
                 let ok = await login('demo@taskflow.app', 'demo1234');
-                
+                if (ok) {
+                    navigate('/dashboard');
+                }
+
                 // If demo user doesn't exist, create it first
                 if (!ok) {
                   await signup('Demo User', 'demo@taskflow.app', 'demo1234');
                   // Now login
                   ok = await login('demo@taskflow.app', 'demo1234');
+                }
+                if (ok) {
+                  navigate('/dashboard');
                 }
               }}
             >

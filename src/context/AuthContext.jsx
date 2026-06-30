@@ -28,7 +28,7 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     setLoading(true); setError(null);
-    await new Promise(r => setTimeout(r, 900));
+    await new Promise(r => setTimeout(r, 100));
     const users = getUsers();
     const found = users.find(u => u.email === email && u.password === password);
     if (!found) {
@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
 
   const signup = async (name, email, password) => {
     setLoading(true); setError(null);
-    await new Promise(r => setTimeout(r, 900));
+    await new Promise(r => setTimeout(r, 100));
     const users = getUsers();
     if (users.find(u => u.email === email)) {
       setError('An account with this email already exists.');
@@ -57,7 +57,6 @@ export function AuthProvider({ children }) {
       avatar: null,
       bio: '',
       joinedAt: new Date().toISOString(),
-      passwordCreatedAt: new Date().toISOString(),
       notifications: { email: true, browser: true, taskReminders: true },
     };
     saveUsers([...users, newUser]);
